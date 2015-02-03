@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.dromdev.mvcframework.view.ActivityMain">
+
+    <TextView
+        android:id="@+id/tv_fibonaci"
+        android:text="@string/label_fibonaci"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/et_fibonaci"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:inputType="number"
+        android:layout_below="@id/tv_fibonaci"/>
+
+    <Button
+        android:id="@+id/bt_fibonaci"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_fibonaci"
+        android:layout_centerHorizontal="true"
+        android:text="@string/label_execute"
+        />
+    <TextView
+        android:id="@+id/tv_fibonaci_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/bt_fibonaci"
+        />
+</RelativeLayout>
