@@ -22,7 +22,7 @@ public class ControllerMain {
 
     public void findFibonacciNumber(int fibonacciSize){
         Fibonacci fibonacci = new Fibonacci(fibonacciSize);
-        for(int i=1; i<=fibonacciSize; i++){
+        for(int i=0; i<fibonacciSize; i++){
             fibonacci.add(fibonacciRecursive(i));
         }
 
@@ -33,6 +33,10 @@ public class ControllerMain {
     }
 
     private int fibonacciRecursive(int number){
+
+        if (number==0){
+            return 0;
+        }
 
         if ((number==1)||(number==2)){
             return 1;

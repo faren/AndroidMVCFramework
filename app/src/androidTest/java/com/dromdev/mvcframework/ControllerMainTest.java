@@ -52,7 +52,7 @@ public class ControllerMainTest extends AndroidTestCase {
 
         //output expected
         Fibonacci mFibonacci = new Fibonacci(valueA);
-        mFibonacci.add(1);
+        mFibonacci.add(0);
 
         doCallRealMethod().when(mController).findFibonacciNumber(valueA);
         mController.findFibonacciNumber(valueA);
@@ -65,17 +65,20 @@ public class ControllerMainTest extends AndroidTestCase {
         assertEquals(mFibonacci.toString(), ((Fibonacci)msgA.getValue().obj).toString());
     }
 
-    public void testFindFibonacciNumberSize2(){
+    public void testFindFibonacciNumberSize5(){
 
         when(mController.getHandler()).thenReturn(mHandler);
 
         //initial fibonaci numbers: 0, 1, 1, 2, 3, 5, 8, 13, .....
-        int valueB = 2;
+        int valueB = 5;
 
         //output expected
         Fibonacci mFibonacci = new Fibonacci(valueB);
         mFibonacci.add(0);
         mFibonacci.add(1);
+        mFibonacci.add(1);
+        mFibonacci.add(2);
+        mFibonacci.add(3);
 
         doCallRealMethod().when(mController).findFibonacciNumber(valueB);
         mController.findFibonacciNumber(valueB);
