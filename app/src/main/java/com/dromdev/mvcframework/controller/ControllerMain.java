@@ -15,6 +15,10 @@ public class ControllerMain {
     private Handler handler;
     private Activity activity;
 
+    public ControllerMain(Handler handler){
+        this.handler = handler;
+    }
+
     public ControllerMain(Handler handler, Activity activity){
         this.handler = handler;
         this.activity = activity;

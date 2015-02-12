@@ -11,6 +11,8 @@ import com.dromdev.mvcframework.view.HandlerMain;
 
 import org.mockito.ArgumentCaptor;
 
+import java.util.List;
+
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
@@ -28,6 +30,11 @@ public class ControllerMainTest extends AndroidTestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
+        // to accommodate dexmaker in emulator mode
+        System.setProperty(
+                "dexmaker.dexcache",
+                getContext().getCacheDir().getPath());
+
         mController = mock(ControllerMain.class);
         mHandler = mock(Handler.class);
 
@@ -42,20 +49,37 @@ public class ControllerMainTest extends AndroidTestCase {
 
     }
 
-    public void testFindFibonacciNumberSize1(){
+    public void testFindFibonacciNumberEmptySize(){
 
         when(mController.getHandler()).thenReturn(mHandler);
 
         //initial fibonaci numbers: 0, 1, 1, 2, 3, 5, 8, 13, .....
-        // input
-        int valueA = 1;
+        int inputValue = 0;
 
-        //output expected
-        Fibonacci mFibonacci = new Fibonacci(valueA);
+        Fibonacci mFibonacci = new Fibonacci(inputValue);
+
+        doCallRealMethod().when(mController).findFibonacciNumber(inputValue);
+        mController.findFibonacciNumber(inputValue);
+
+        ArgumentCaptor<Message> msgA = ArgumentCaptor.forClass(Message.class);
+        verify(mHandler).sendMessageAtTime(msgA.capture(), anyInt());
+
+        assertEquals(HandlerMain.MAIN_FIBONACI, msgA.getValue().what);
+        assertNotNull(msgA.getValue().obj);
+        assertEquals(mFibonacci.toString(), msgA.getValue().obj.toString());
+    }
+
+    public void testFindFibonacciNumberOneSize(){
+
+        when(mController.getHandler()).thenReturn(mHandler);
+
+        int inputValue = 1;
+
+        Fibonacci mFibonacci = new Fibonacci(inputValue);
         mFibonacci.add(0);
 
-        doCallRealMethod().when(mController).findFibonacciNumber(valueA);
-        mController.findFibonacciNumber(valueA);
+        doCallRealMethod().when(mController).findFibonacciNumber(inputValue);
+        mController.findFibonacciNumber(inputValue);
 
         ArgumentCaptor<Message> msgA = ArgumentCaptor.forClass(Message.class);
         verify(mHandler).sendMessageAtTime(msgA.capture(), anyInt());
@@ -65,23 +89,21 @@ public class ControllerMainTest extends AndroidTestCase {
         assertEquals(mFibonacci.toString(), ((Fibonacci)msgA.getValue().obj).toString());
     }
 
-    public void testFindFibonacciNumberSize5(){
+    public void testFindFibonacciNumberManySize(){
 
         when(mController.getHandler()).thenReturn(mHandler);
 
-        //initial fibonaci numbers: 0, 1, 1, 2, 3, 5, 8, 13, .....
-        int valueB = 5;
+        int inputValue = 5;
 
-        //output expected
-        Fibonacci mFibonacci = new Fibonacci(valueB);
+        Fibonacci mFibonacci = new Fibonacci(inputValue);
         mFibonacci.add(0);
         mFibonacci.add(1);
         mFibonacci.add(1);
         mFibonacci.add(2);
         mFibonacci.add(3);
 
-        doCallRealMethod().when(mController).findFibonacciNumber(valueB);
-        mController.findFibonacciNumber(valueB);
+        doCallRealMethod().when(mController).findFibonacciNumber(inputValue);
+        mController.findFibonacciNumber(inputValue);
 
         ArgumentCaptor<Message> msgB = ArgumentCaptor.forClass(Message.class);
         verify(mHandler).sendMessageAtTime(msgB.capture(), anyInt());
@@ -90,5 +112,18 @@ public class ControllerMainTest extends AndroidTestCase {
         assertNotNull(msgB.getValue().obj);
         assertEquals(mFibonacci.toString(), ((Fibonacci)msgB.getValue().obj).toString());
 
+    }
+
+    public void xtestCobaCoba(){
+        //mock creation
+        List mockedList = mock(List.class);
+
+        //using mock object
+        mockedList.add("one");
+        mockedList.clear();
+
+        //verification
+        verify(mockedList).add("one");
+        verify(mockedList).clear();
     }
 }
