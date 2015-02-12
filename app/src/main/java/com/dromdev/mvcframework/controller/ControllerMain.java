@@ -35,18 +35,19 @@ public class ControllerMain {
         msg.obj = fibonacci;
         getHandler().sendMessage(msg);
     }
-
-    private int fibonacciRecursive(int number){
-
-        if (number==0){
-            return 0;
-        }
-
-        if ((number==1)||(number==2)){
+    
+    private int fibTailHelper(int acc, int next, int number) {
+        if (number <= 0) {
             return 1;
         }
-
-        return fibonacciRecursive(number-1)+fibonacciRecursive(number-2);
+        return fibTailHelper(next, acc + next, number - 1);
+    }
+    
+    private int fibonacciRecursive(int number){
+        if (number <= 2) {
+            return 1;
+        }
+        return fibTailHelper(0, 1, number);
     }
 
     public Activity getActivity(){
